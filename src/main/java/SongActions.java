@@ -85,12 +85,14 @@ public class SongActions {
         // Get albums created by artist - albums can represent a one or more songs
         List<String> albumReleases = spotify.getReleases(spotifyId);
         if (albumReleases.size() == 0) {
+            deleteArtist(name);
             return "No album releases found";
         }
 
         // Get tracks for each album
         List<String> tracks = spotify.getAlbumTracks(name, albumReleases);
         if (tracks.size() == 0) {
+            deleteArtist(name);
             return "No tracks found";
         }
         logger.log("Found album tracks for artist");
@@ -98,6 +100,7 @@ public class SongActions {
         // Get audio features of each song
         List<AudioFeatures> audioFeatureList = spotify.getSeveralTrackFeatures(tracks);
         if (audioFeatureList.size() == 0) {
+            deleteArtist(name);
             return "No audio features found";
         }
         List<String> trackList = new ArrayList<>();
@@ -113,6 +116,7 @@ public class SongActions {
         // Get song name, releaseDate, and external url (the playable Spotify link)
         List<Track> songInfoList = spotify.getSongInfo(trackList);  //batch
         if (songInfoList.size() == 0) {
+            deleteArtist(name);
             return "No song information found";
         }
         int x = 0;
@@ -127,10 +131,16 @@ public class SongActions {
             x++;
         }
         save(songs);
-        if (songs.size() == 0)
+        if (songs.size() == 0) {
+            deleteArtist(name);
             return "No songs added";
+        }
         return "Artist and Songs added";
     }
 
+    public void deleteArtist(String name){
+        Artist artist = mapper.load(Artist.class, name);
+        mapper.delete(artist);
+    }
 
 }

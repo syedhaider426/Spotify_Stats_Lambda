@@ -135,7 +135,7 @@ public class SpotifyActions {
                         if (artist.getName().toLowerCase().equals(name)) {
                             String song = item.getName().toLowerCase();
                             System.out.println(song);
-                            if (!song.contains("remix") || song.contains(artistName)) {
+                            if (!song.contains("remix") || song.contains(name)) {
                                 originalList.put(item.getName(), item.getId());
                                 break;
                             }
