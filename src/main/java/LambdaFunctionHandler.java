@@ -12,7 +12,7 @@ import java.util.Map;
 public class LambdaFunctionHandler implements RequestHandler<DynamodbEvent, Integer> {
     public Integer handleRequest(DynamodbEvent ddbEvent, Context context) {
         LambdaLogger logger = context.getLogger();
-        logger.log("Starting the process......");
+        logger.log("----STARTING THE PROCESS------");
         logger.log("Received event: " + ddbEvent);
         JSONObject jo;
         SongActions songActions = new SongActions();
