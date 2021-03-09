@@ -25,7 +25,7 @@ jobs:
     - 
       name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Setup Temp Directory
+    - name: Move to JarFile directory
       run: |
         cd target
         mkdir jarFile
