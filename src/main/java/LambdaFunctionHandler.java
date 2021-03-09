@@ -27,7 +27,6 @@ public class LambdaFunctionHandler implements RequestHandler<DynamodbEvent, Inte
                 spotifyId = jo.getString("spotifyId");
                 // If the artist does not have any songs in the Song table, execute
                 if(!songActions.isArtistHasSongs(artist)) {
-                    logger.log("No songs found. Let's find them...");
                     results = songActions.populateSongs(artist, spotifyId, logger);
                     logger.log(results);
                 }
@@ -35,42 +34,6 @@ public class LambdaFunctionHandler implements RequestHandler<DynamodbEvent, Inte
         }
         return ddbEvent.getRecords().size();
     }
-
-//    /**
-//     * Lambda function is triggered upon DynamoDB inserting/updating/deleting a record into the Artist table.
-//     * The function will get the artist and populate the Songs table with the songs the artist
-//     * has created. These songs are returned from making a request to Spotify's API.
-//     * @param event DML (insert,update,delete)
-//     * @param context (logger)
-//     * @return number of records processed
-//     */
-//    @Override
-//    public Integer handleRequest(DynamodbEvent event, Context context) {
-//        for (DynamodbStreamRecord record : event.getRecords()) {
-//            logger.log(record.getEventID());
-//            logger.log(record.getEventName());
-//            logger.log("Checking if record is an INSERT");
-//            if(record.getEventName().equals("INSERT")) {
-//                // SuccessRecord will be a JSON that contains the new artist and their spotifyId
-//                String successRecord = record.getDynamodb().toString();
-//                logger.log(record.toString());
-//                logger.log(record.getDynamodb().toString());
-//                logger.log(successRecord);
-//                jo = new JSONObject(successRecord);
-//                artist = jo.getString("artist");
-//                spotifyId = jo.getString("spotifyId");
-//                // If the artist does not have any songs in the Song table, execute
-//                if(!songActions.isArtistHasSongs(artist)) {
-//                    logger.log("No songs found. Let's find them...");
-//                    results = db.populateSongs(artist, spotifyId, logger);
-//                    logger.log(results);
-//                }
-//            }
-//        }
-//        return event.getRecords().size();
-//    }
-//
-//
 }
 
 
