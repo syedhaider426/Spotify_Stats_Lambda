@@ -35,39 +35,6 @@ public class SpotifyActions {
 
     }
 
-    public SpotifyApi getSpotifyApi() {
-        return spotifyApi;
-    }
-
-
-    /**
-     * Search for the artist in Spotify Api
-     *
-     * @param artist name of artist
-     * @return the spotify id of the artist
-     */
-    public String searchForArtist(String artist) {
-        this.spotifyApi = setToken();
-        // Build request to search for artist
-        SearchItemRequest searchItemRequest = spotifyApi
-                .searchItem(artist, "artist")
-                .build();
-        try {
-            // Execute request
-            SearchResult searchResult = searchItemRequest.execute();
-
-            // Get artists from request
-            Artist[] artists = searchResult.getArtists().getItems();
-            if (artists.length == 0) {
-                return "";
-            }
-            return artists[0].getId();
-        } catch (ParseException | SpotifyWebApiException | IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
     /**
      * Get album releases from a specific artist
      *
@@ -134,7 +101,6 @@ public class SpotifyActions {
                     for (ArtistSimplified artist : artistsSimplified) {
                         if (artist.getName().toLowerCase().equals(name)) {
                             String song = item.getName().toLowerCase();
-                            System.out.println(song);
                             if (!song.contains("remix") || song.contains(name)) {
                                 originalList.put(item.getName(), item.getId());
                                 break;
