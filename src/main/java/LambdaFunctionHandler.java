@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class LambdaFunctionHandler implements RequestHandler<DynamodbEvent, Integer> {
     public Integer handleRequest(DynamodbEvent ddbEvent, Context context) {
-        context.getLogger().log("SWAG ON YOU");
         LambdaLogger logger = context.getLogger();
         logger.log("Received event: " + ddbEvent);
         JSONObject jo;
@@ -19,7 +18,6 @@ public class LambdaFunctionHandler implements RequestHandler<DynamodbEvent, Inte
         String spotifyId, artist, results = "";
         Map<String, AttributeValue> map;
         for (DynamodbStreamRecord record : ddbEvent.getRecords()) {
-            logger.log("Checking if record is an INSERT");
             if(record.getEventName().equals("INSERT")) {
                 map = record.getDynamodb().getNewImage();
                 String strMap = ItemUtils.toItem(map).toJSON();

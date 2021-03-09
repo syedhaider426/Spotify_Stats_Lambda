@@ -102,6 +102,7 @@ public class SpotifyActions {
                         if (artist.getName().toLowerCase().equals(name)) {
                             String song = item.getName().toLowerCase();
                             if (!song.contains("remix") || song.contains(name)) {
+                                System.out.println(song);
                                 originalList.put(item.getName(), item.getId());
                                 break;
                             }
@@ -109,6 +110,7 @@ public class SpotifyActions {
                     }
                 }
             }
+            System.out.println("All tracks found");
             // Duplicates removed
             for (Map.Entry<String, String> entry : originalList.entrySet()) {
                 tracksList.add(entry.getValue());
@@ -210,7 +212,6 @@ public class SpotifyActions {
         } catch (IOException | SpotifyWebApiException | ParseException ex) {
             ex.printStackTrace();
         }
-
         return this.spotifyApi;
     }
 

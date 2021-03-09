@@ -105,6 +105,7 @@ public class SongActions {
         }
         List<String> trackList = new ArrayList<>();
 
+        logger.log("Found audio features for artist");
         /**
          * A new list of tracks is returned from getSeveralTrackFeatures because
          * some songs do not have audio features
