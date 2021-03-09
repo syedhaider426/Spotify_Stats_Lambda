@@ -25,6 +25,11 @@ jobs:
     - 
       name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Setup Temp Directory
+      run: |
+        cd target
+        mkdir jarFile
+        mv Spotify_Stats_Lambda-1.0-SNAPSHOT.jar jarFile
     - 
       name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
@@ -35,4 +40,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
-        SOURCE_DIR: "target/Spotify_Stats_Lambda-1.0-SNAPSHOT.jar"
+        SOURCE_DIR: "target/jarFile"
